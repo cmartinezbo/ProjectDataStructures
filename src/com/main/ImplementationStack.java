@@ -35,6 +35,7 @@ public class ImplementationStack {
     private static int getChoice(Scanner sc) {
         int choice;
 
+        System.out.println("Menu");
         System.out.println("1. Push");
         System.out.println("2. Pop");
         System.out.println("3. Top");
@@ -42,13 +43,17 @@ public class ImplementationStack {
         System.out.println("5. Is Empty?");
         System.out.println("6. Exit");
         System.out.print("Enter your choice: ");
+
         choice = sc.nextInt();
+        sc.close();
 
         return choice;
     } // end of getChoice
 
     public static boolean stackOperationsInteger(Stack<Integer> stack, Scanner sc) {
+
         int choice = 0;
+        Scanner scInt = new Scanner(System.in);
 
         do {
             choice = getChoice(sc);
@@ -56,7 +61,7 @@ public class ImplementationStack {
             switch(choice) {
                 case 1:
                     System.out.print("Enter the element to push: ");
-                    int element = sc.nextInt();
+                    int element = scInt.nextInt();
                     stack.push(element);
                     break;
                 case 2:
@@ -79,11 +84,13 @@ public class ImplementationStack {
             }
         } while(choice != 6);
 
+        scInt.close();
         return false;
     } // end of stackOperationsInteger
 
     public static boolean stackOperationsString(Stack<String> stack, Scanner sc) {
         int choice = 0;
+        Scanner scStr = new Scanner(System.in);
 
         do {
             choice = getChoice(sc);
@@ -91,7 +98,7 @@ public class ImplementationStack {
             switch(choice) {
                 case 1:
                     System.out.print("Enter the element to push: ");
-                    String element = sc.next();
+                    String element = scStr.nextLine();
                     stack.push(element);
                     break;
                 case 2:
@@ -114,6 +121,7 @@ public class ImplementationStack {
             }
         } while(choice != 6);
 
+        scStr.close();
         return false;
     } // end of stackOperationsString
 
