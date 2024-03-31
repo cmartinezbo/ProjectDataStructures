@@ -1,5 +1,7 @@
 package com.main;
 import com.datastructures.sequential.*;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ImplementationStack {
@@ -9,26 +11,31 @@ public class ImplementationStack {
 
         boolean bo = true;
 
-        do {
-            System.out.println("1. Stack of subjects");
-            System.out.println("2. Stack of subject codes");
-            System.out.print("Enter your choice: ");
+        try {
+            do {
+                System.out.println("1. Stack of subjects");
+                System.out.println("2. Stack of subject codes");
+                System.out.print("Enter your choice: ");
 
-            int choice = sc.nextInt();
+                int choice = sc.nextInt();
 
-            switch(choice) {
-                case 1:
-                    Stack<String> stackSubjects = new Stack<>();
-                    bo = stackOperationsString(stackSubjects, sc);
-                    break;
-                case 2:
-                    Stack<Integer> stackCodes = new Stack<>();
-                    bo = stackOperationsInteger(stackCodes, sc);
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-            }
-        } while(bo);
+                switch(choice) {
+                    case 1:
+                        Stack<String> stackSubjects = new Stack<>();
+                        bo = stackOperationsString(stackSubjects, sc);
+                        break;
+                    case 2:
+                        Stack<Integer> stackCodes = new Stack<>();
+                        bo = stackOperationsInteger(stackCodes, sc);
+                        break;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            } while(bo);
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid option");
+            System.out.println("Exiting...");
+        }
 
     } // end of main
 
@@ -54,36 +61,42 @@ public class ImplementationStack {
         int choice = 0;
         Scanner scInt = new Scanner(System.in);
 
-        do {
-            choice = getChoice(sc);
+        try {
+            do {
+                choice = getChoice(sc);
 
-            switch(choice) {
-                case 1:
-                    System.out.print("Enter the element to push: ");
-                    int element = scInt.nextInt();
-                    stack.push(element);
-                    break;
-                case 2:
-                    System.out.println("Popped element: " + stack.pop());
-                    break;
-                case 3:
-                    System.out.println("Top element: " + stack.top());
-                    break;
-                case 4:
-                    stack.display();
-                    break;
-                case 5:
-                    System.out.println("Is empty? " + stack.isEmpty());
-                    break;
-                case 6:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-            }
-        } while(choice != 6);
+                switch(choice) {
+                    case 1:
+                        System.out.print("Enter the element to push: ");
+                        int element = scInt.nextInt();
+                        stack.push(element);
+                        break;
+                    case 2:
+                        System.out.println("Popped element: " + stack.pop());
+                        break;
+                    case 3:
+                        System.out.println("Top element: " + stack.top());
+                        break;
+                    case 4:
+                        stack.display();
+                        break;
+                    case 5:
+                        System.out.println("Is empty? " + stack.isEmpty());
+                        break;
+                    case 6:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            } while(choice != 6);
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid option");
+            System.out.println("Exiting...");
+        }
 
         scInt.close();
+
         return false;
     } // end of stackOperationsInteger
 
@@ -91,36 +104,41 @@ public class ImplementationStack {
         int choice = 0;
         Scanner scStr = new Scanner(System.in);
 
-        do {
-            choice = getChoice(sc);
+        try {
+            do {
+                choice = getChoice(sc);
 
-            switch(choice) {
-                case 1:
-                    System.out.print("Enter the element to push: ");
-                    String element = scStr.nextLine();
-                    stack.push(element);
-                    break;
-                case 2:
-                    System.out.println("Popped element: " + stack.pop());
-                    break;
-                case 3:
-                    System.out.println("Top element: " + stack.top());
-                    break;
-                case 4:
-                    stack.display();
-                    break;
-                case 5:
-                    System.out.println("Is empty? " + stack.isEmpty());
-                    break;
-                case 6:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-            }
-        } while(choice != 6);
-
+                switch(choice) {
+                    case 1:
+                        System.out.print("Enter the element to push: ");
+                        String element = scStr.nextLine();
+                        stack.push(element);
+                        break;
+                    case 2:
+                        System.out.println("Popped element: " + stack.pop());
+                        break;
+                    case 3:
+                        System.out.println("Top element: " + stack.top());
+                        break;
+                    case 4:
+                        stack.display();
+                        break;
+                    case 5:
+                        System.out.println("Is empty? " + stack.isEmpty());
+                        break;
+                    case 6:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            } while(choice != 6);
+        }  catch (InputMismatchException e) {
+            System.out.println("Please enter a valid option");
+            System.out.println("Exiting...");
+        }
         scStr.close();
+
         return false;
     } // end of stackOperationsString
 
