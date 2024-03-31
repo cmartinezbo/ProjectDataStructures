@@ -1,6 +1,6 @@
 package com.main;
-import com.datastructures.sequential.*;
 
+import com.datastructures.sequential.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
