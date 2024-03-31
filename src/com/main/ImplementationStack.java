@@ -45,7 +45,6 @@ public class ImplementationStack {
         System.out.print("Enter your choice: ");
 
         choice = sc.nextInt();
-        sc.close();
 
         return choice;
     } // end of getChoice

@@ -204,6 +204,5 @@ public class SinglyLinkedList<T> {
             current = current.next;
         }
         System.out.println("]");
-        System.out.println();
     }
 }
