@@ -1,11 +1,11 @@
 package com.main;
 
-import com.datastructures.sequential.Queue;
+import com.datastructures.sequential.Stack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class TestQueue {
+public class TestStack {
 
     private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final int RANDOM_STRING_LENGTH = 10;
@@ -30,38 +30,38 @@ public class TestQueue {
     }
 
     public static void main(String[] args) {
-        int numberOfSubjects = 20_000_000;
+        int numberOfSubjects = 10_000;
 
-        List<String> randomSubjects = TestQueue.generateRandomSubjects(numberOfSubjects); // generates 10 random subjects
+        List<String> randomSubjects = TestStack.generateRandomSubjects(numberOfSubjects); // generates 10 random subjects
 
-        Queue<String> queueSubjects = new Queue<>();
+        Stack<String> stackSubjects = new Stack<>();
 
-        long startTimeEnqueue, endTimeEnqueue, durationEnqueue;
+        long startTimePush, endTimePush, durationPush;
 
-        startTimeEnqueue = System.nanoTime();
+        startTimePush = System.nanoTime();
 
         for (String subject : randomSubjects) {
-            queueSubjects.enqueue(subject);
+            stackSubjects.push(subject);
         }
 
-        endTimeEnqueue = System.nanoTime();
-        durationEnqueue = endTimeEnqueue - startTimeEnqueue;
+        endTimePush = System.nanoTime();
+        durationPush = endTimePush - startTimePush;
         System.out.println("Number of subjects: " + numberOfSubjects);
-        System.out.println("Time taken to enqueue subject: " + durationEnqueue + " nanoseconds");
+        System.out.println("Time taken to push subject: " + durationPush + " nanoseconds");
 
 
         // Time taken to pop all subjects
 
-        long startTimeDequeue, endTimeDequeue, durationDequeue;
+        long startTimePop, endTimePop, durationPop;
 
-        startTimeDequeue = System.nanoTime();
+        startTimePop = System.nanoTime();
 
-        while (!queueSubjects.isEmpty()) {
-            queueSubjects.dequeue();
+        while (!stackSubjects.isEmpty()) {
+            stackSubjects.pop();
         }
 
-        endTimeDequeue = System.nanoTime();
-        durationDequeue = endTimeDequeue - startTimeDequeue;
-        System.out.println("Time taken to dequeue all subjects: " + durationDequeue + " nanoseconds");
+        endTimePop = System.nanoTime();
+        durationPop = endTimePop - startTimePop;
+        System.out.println("Time taken to pop all subjects: " + durationPop + " nanoseconds");
     }
 }
