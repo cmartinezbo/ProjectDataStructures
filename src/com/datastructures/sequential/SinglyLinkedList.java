@@ -15,6 +15,7 @@ public class SinglyLinkedList<T> {
     Node<T> head = null; // Head node
     Node<T> tail = null; // Tail node
 
+
     // Push Front -> O(1)
     public void pushFront(T key) { // Insert a new node at the front
         Node<T> newNode = new Node<>(key); // Create a new node and set its data
@@ -198,11 +199,15 @@ public class SinglyLinkedList<T> {
         }
 
         System.out.print("Nodes of singly linked list: ");
-        System.out.print("[ ");
-        while (current != null) {
-            System.out.print(current.key + " ");
+        StringBuilder sb=new StringBuilder();
+        sb.append("[");
+        while (current.next != null) {
+            sb.append(current.key + ", ");
             current = current.next;
         }
-        System.out.println("]");
+
+        sb.append(current.key);
+        sb.append("]");
+        System.out.println(sb);
     }
 }
