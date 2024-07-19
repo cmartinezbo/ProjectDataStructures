@@ -1,6 +1,9 @@
 package com.datastructures.sequential;
 
-public class SinglyLinkedList<T> {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class SinglyLinkedList<T> implements Iterable<T> {
 
     public static class Node<T> {
         T key; // Key
@@ -210,4 +213,27 @@ public class SinglyLinkedList<T> {
         sb.append("]");
         System.out.println(sb);
     }
+
+    public Iterator<T> iterator(){
+        return new linkedListIterator();
+    }
+
+    private class linkedListIterator implements Iterator<T>{
+        private Node<T> current=head;
+
+        @Override
+        public boolean hasNext() {
+            return current!=null;
+        }
+
+        public T next(){
+            if(!hasNext()){
+                throw new NoSuchElementException();
+            }
+            T dataNode=current.key;
+            current=current.next;
+            return dataNode;
+        }
+    }
+
 }
