@@ -57,6 +57,7 @@ public class csvLoader {
             subject.getAttributesInformation();
             for(group group: subject.groups){
                 System.out.println(group.getInformation());
+                System.out.println();
             }
         }
     }

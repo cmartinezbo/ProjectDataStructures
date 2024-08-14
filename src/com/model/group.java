@@ -28,7 +28,7 @@ public class group {
         String [] aDays=days.split("-");
         DayOfWeek [] dofarray = new DayOfWeek[aDays.length];
         for(int i=0; i<aDays.length; i++){
-            if(aDays[i].equals("lunes")){
+            if(aDays[i].trim().equals("lunes")){
                 dofarray[i]= DayOfWeek.MONDAY;
             }
             else if(aDays[i].equals("martes")){
@@ -54,12 +54,33 @@ public class group {
         int j = 0;
         String d="";
         for(int i=0; i<this.days.length-1;i++){
+            //System.out.println(this.number+" "+this.teacher);
             d+=this.days[i].toString()+"-";
             j=i;
         }
-        d+=this.days[j+1].toString();
+        if(this.days.length==1){
+            d+=this.days[0].toString();
+        }
+        else{
+            d+=this.days[j+1].toString();
+
+        }
         String information="Grupo número: "+this.number+", Profesor: "+this.teacher+", Facultad: "+this.faculty+", Hora de inicio: "+startTime.toString()+", Hora de finalización: "+endTime.toString()+", Ubicación: "+this.location+", Días: "+d;
         return information;
+    }
+
+    public static void main(String[] args){
+        String information="4,RICARDO ISAZA RUGET,FACULTAD DE INGENIERÍA,9,11,(Magistral) SALON DE VIDEO CONFERENCIAS 454-302. 454-302. 454 - Luis Carlos Sarmiento Angulo. SALON.,miércoles";
+        int number=4;
+        String profesor="RICARDO ISAZA RUGET";
+        String facultad="FACULTAD DE INGENIERÍA";
+        int horaI=9;
+        int horaF=11;
+        String salon="(Magistral) SALON DE VIDEO CONFERENCIAS 454-302. 454-302. 454 - Luis Carlos Sarmiento Angulo. SALON.";
+        String dias="miércoles";
+        group grupo=new group(number,profesor,facultad,horaI,horaF,salon,dias);
+        System.out.println(grupo.getInformation());
+
     }
 
 }
