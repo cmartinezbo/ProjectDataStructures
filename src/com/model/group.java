@@ -44,7 +44,7 @@ public class group {
                 dofarray[i]= DayOfWeek.FRIDAY;
             }
             else if(aDays[i].equals("sábado")){
-                dofarray[i]= DayOfWeek.MONDAY;
+                dofarray[i]= DayOfWeek.SATURDAY;
             }
         }
         return dofarray;
