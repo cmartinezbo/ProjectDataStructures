@@ -9,7 +9,7 @@ public class schedule {
 
     private SinglyLinkedList<subject> subjects=new SinglyLinkedList<>();
 
-    private Map<DayOfWeek,subject> schedule=new TreeMap<>(); //Also could be treemap with keys-value=DayOfWeek-groups
+    private Map<DayOfWeek,subject> schedule=new TreeMap<>(); //Also could be a treemap with keys-value=DayOfWeek-groups
     private String scheduleName;
 
     public schedule(String name){
