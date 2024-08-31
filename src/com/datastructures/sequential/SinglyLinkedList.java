@@ -1,5 +1,3 @@
-package com.datastructures.sequential;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -38,6 +36,14 @@ public class SinglyLinkedList<T> implements Iterable<T> {
             throw new IllegalStateException("List is empty");
         }
         return head.key;
+    }
+    
+    // Top Front Node -> O(1)
+    public Node<T> topFrontNode() { //Returns the front node
+            if (head == null) {
+            throw new IllegalStateException("List is empty");
+        }
+        return head;
     }
 
     // Pop Front -> O(1)
@@ -139,6 +145,12 @@ public class SinglyLinkedList<T> implements Iterable<T> {
     public boolean isEmpty() { // Is it empty?
         return head == null;
     }
+    
+    // Clear -> O(1)
+    public void clear() { //Clears the list
+        head = null; 
+        tail = null; 
+    }
 
     // Add Before -> O(n)
     public void addBefore(T key, T newKey) { // Inserts a new node before a node with a specific key, if the key is
@@ -237,3 +249,5 @@ public class SinglyLinkedList<T> implements Iterable<T> {
     }
 
 }
+
+
