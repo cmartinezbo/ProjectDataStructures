@@ -7,6 +7,8 @@
  *
  * @author Acer
  */
+
+package com.Panels;
 public class PanelUsuario extends javax.swing.JPanel {
 
     /**
