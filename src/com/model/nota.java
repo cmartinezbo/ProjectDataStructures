@@ -1,4 +1,4 @@
-
+package com.model;
 
 public class nota {
 

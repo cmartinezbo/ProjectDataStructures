@@ -1,4 +1,7 @@
-class NotaListOperations {
+package com.model;
+
+import com.datastructures.sequential.SinglyLinkedList;
+public class NotaListOperations {
 
     private SinglyLinkedList<nota> listaDeNotas;
 

@@ -1,8 +1,12 @@
-
+package com.Panels;
 //import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+
+import com.model.NotaListOperations;
+import com.model.nota;
+import com.datastructures.sequential.SinglyLinkedList;
 
 public class PanelNotas extends javax.swing.JPanel {
 
