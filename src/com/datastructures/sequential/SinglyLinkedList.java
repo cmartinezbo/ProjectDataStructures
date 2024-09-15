@@ -6,8 +6,8 @@ import java.util.NoSuchElementException;
 public class SinglyLinkedList<T> implements Iterable<T> {
 
     public static class Node<T> {
-        T key; // Key
-        Node<T> next; // Pointer to the next node
+        public T key; // Key
+        public Node<T> next; // Pointer to the next node
 
         public Node(T key) { // Constructor
             this.key = key; // Initialize the data

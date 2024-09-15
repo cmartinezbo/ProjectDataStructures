@@ -53,9 +53,9 @@ public class NotaListOperations {
         if (sumaPorcentajes >= 0 && sumaPorcentajes <= 99) {
             double diferenciaPorcentaje = 100 - sumaPorcentajes;
             double notaMin = (3 - notaAcumulada()) / (diferenciaPorcentaje * 0.01);
-            notaMinArray[1] = diferenciaPorcentaje;
+            notaMinArray[1] = redondear(diferenciaPorcentaje);
             notaMinArray[0] = redondear(notaMin);
-            if (notaMinArray[0] < 0){
+            if (notaMinArray[0] < 0 || notaMinArray[0] > 5.5){
                 notaMinArray[0] = 0;
             }
         } else {
