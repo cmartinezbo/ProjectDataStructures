@@ -346,6 +346,17 @@ public class PanelTarea extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 }
 
+class CustomTableModel extends DefaultTableModel {
+    public CustomTableModel(Object[] columnNames, int rowCount) {
+        super(columnNames, rowCount);
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        // Make the button column editable
+        return column == getColumnCount() - 1;
+    }
+}
 
 class ButtonRenderer extends JButton implements TableCellRenderer {
     public ButtonRenderer() {
@@ -397,4 +408,14 @@ class ButtonEditor extends DefaultCellEditor {
 }
 
 
+class NonEditableTableModel extends DefaultTableModel {
+    public NonEditableTableModel(Object[] columnNames, int rowCount) {
+        super(columnNames, rowCount);
+    }
 
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false; // Las celdas no son editables
+    }
+    
+}

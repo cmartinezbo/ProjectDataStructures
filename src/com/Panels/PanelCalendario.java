@@ -8,26 +8,47 @@
  * @author Acer
  */
 package com.Panels;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import com.model.*;
+
+
+
+
+
 public class PanelCalendario extends javax.swing.JPanel {
- 
+        private subject asignatura1; // Mover la declaración aquí
+
     /**
      * Creates new form Panel1
      */
     public PanelCalendario() {
         initComponents();
-        configurarTablaCalendario();
+        //configurarTablaCalendarioCompleto();
+        configurarTablaCalendarioDetalles();
+        group grupo3 = new group(3, "Alfredo Arias", "Facultad de Ciencias", 11, 13, "Edificio 405 - Salon 203", "lunes");
+        group grupo5 = new group(5, "Alfredo Arias", "Facultad de Ciencias", 11, 13, "Edificio 405 - Salon 203", "martes");
+        group grupo7 = new group(7, "Alfredo Arias", "Facultad de Ciencias", 11, 13, "Edificio 405 - Salon 203", "jueves");
+        group grupo9 = new group(9, "Alfredo Arias", "Facultad de Ciencias", 11, 13, "Edificio 405 - Salon 203", "viernes");
+        asignatura1 = new subject(1001, "Cálculo integral", 4, "Fund Obli");
+        asignatura1.addGroup(grupo3);
+        asignatura1.addGroup(grupo5);
+        asignatura1.addGroup(grupo7);
+        asignatura1.addGroup(grupo9);
+        
     }
 
     
-    private void configurarTablaCalendario() {
+    private void configurarTablaCalendarioCompleto() {
         // Crear el modelo de tabla personalizado
-        CustomTableModel modeloCalendario = new CustomTableModel(
+        CustomTableModel1 modeloCalendarioCompleto = new CustomTableModel1(
             new Object[] {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"}, // Nombres de las columnas
             12 // Número inicial de filas
         );
-        calendarioMes.setModel(modeloCalendario);
+        calendarioMes.setModel(modeloCalendarioCompleto);
 
         // Configurar la fuente y altura de las filas
         calendarioMes.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -52,6 +73,38 @@ public class PanelCalendario extends javax.swing.JPanel {
             }
         }
     }
+    
+    private void configurarTablaCalendarioDetalles() {
+        // Crear el modelo de tabla personalizado
+        CustomTableModel2 modeloCalendarioDetalles = new CustomTableModel2(
+            new Object[] {"", "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"}, // Nombres de las columnas
+            24 // Número inicial de filas
+        );
+        calendarioMes.setModel(modeloCalendarioDetalles);
+
+        // Configurar la fuente y altura de las filas
+        calendarioMes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            calendarioMes.setDefaultRenderer(Object.class, new CustomCellRenderer());
+
+        // Configurar los valores en la tabla
+        calendarioMes.getColumnModel().getColumn(0).setPreferredWidth(15);
+        calendarioMes.getColumnModel().getColumn(1).setPreferredWidth(15);
+
+
+        for (int row = 0; row < 24; row++) {
+                calendarioMes.setValueAt(row + ":00", row, 0);
+        }
+
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+           @Override
+           public void run() {
+               //método para que la tabla inicie en la fila 7:00
+               int middleRow = 7;
+               calendarioMes.scrollRectToVisible(calendarioMes.getCellRect(middleRow, 0, true));
+           }
+        });
+        
+    }
 
     
 
@@ -71,6 +124,7 @@ public class PanelCalendario extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         calendarioMes = new javax.swing.JTable();
+        agregarMateria = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1000, 675));
 
@@ -83,7 +137,7 @@ public class PanelCalendario extends javax.swing.JPanel {
         jLabel1.setText("CALENDARIO");
         jLabel1.setPreferredSize(new java.awt.Dimension(52, 16));
 
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(910, 510));
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(910, 500));
 
         calendarioMes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,9 +158,16 @@ public class PanelCalendario extends javax.swing.JPanel {
                 "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"
             }
         ));
-        calendarioMes.setPreferredSize(new java.awt.Dimension(910, 480));
+        calendarioMes.setPreferredSize(new java.awt.Dimension(900, 1440));
         calendarioMes.setRowHeight(60);
         jScrollPane2.setViewportView(calendarioMes);
+
+        agregarMateria.setText("Agregar");
+        agregarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarMateriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -114,22 +175,31 @@ public class PanelCalendario extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(242, 242, 242)
+                        .addComponent(agregarMateria))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(agregarMateria)
+                        .addGap(33, 33, 33)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(358, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -148,8 +218,13 @@ public class PanelCalendario extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void agregarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarMateriaActionPerformed
+        calendarioMes.setValueAt(asignatura1.getName() + " (grupo ...)", 9, 5);
+    }//GEN-LAST:event_agregarMateriaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton agregarMateria;
     public javax.swing.JTable calendarioMes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -159,8 +234,8 @@ public class PanelCalendario extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 }
 
-class CustomTableModel extends DefaultTableModel {
-    public CustomTableModel(Object[] columnNames, int rowCount) {
+class CustomTableModel1 extends DefaultTableModel {
+    public CustomTableModel1(Object[] columnNames, int rowCount) {
         super(columnNames, rowCount);
     }
 
@@ -169,4 +244,48 @@ class CustomTableModel extends DefaultTableModel {
         // Hacer las filas impares no editables
         return ((row % 2) - 1) == 0; // Las filas pares (índices 0, 2, 4, ...) son editables
     }
+}
+
+class CustomTableModel2 extends DefaultTableModel {
+    public CustomTableModel2(Object[] columnNames, int rowCount) {
+        super(columnNames, rowCount);
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        // Hacer las filas impares no editables
+        return false;
+    }
+}
+
+
+
+class CustomCellRenderer extends DefaultTableCellRenderer {
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
+        
+        // Llamamos al método de la superclase para mantener el renderizado predeterminado
+        Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        // Restaurar el borde predeterminado (líneas divisorias)
+        if (cell instanceof JComponent) {
+            // Crear un borde gris de 1 píxel de grosor
+            ((JComponent) cell).setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+        }
+
+        // Especificar la celda que deseas personalizar (por ejemplo, fila 5, columna 3)
+        if (row == 9 && column == 5) {
+            cell.setBackground(Color.YELLOW);  // Cambiar el color de fondo a amarillo
+            cell.setForeground(Color.BLACK);   // Cambiar el color del texto a negro
+        } else {
+            // Restaurar los colores predeterminados si la celda no coincide
+            cell.setBackground(Color.WHITE);   // Color de fondo predeterminado
+            cell.setForeground(Color.BLACK);   // Color de texto predeterminado
+        }
+        
+        return cell;
+    }
+    
 }

@@ -204,7 +204,7 @@ public class PanelNotas extends javax.swing.JPanel {
     
     private void configurarTablaNotas() {
         // Crear y establecer el modelo de la tabla
-        NonEditableTableModel modeloTabla = new NonEditableTableModel(
+        NonEditableTableModel1 modeloTabla = new NonEditableTableModel1(
             new Object[] {"%", "Nombre", "Nota"}, // Nombres de las columnas
             0 // Número inicial de filas
         );
@@ -227,7 +227,7 @@ public class PanelNotas extends javax.swing.JPanel {
 
     
     private void BotonAgregarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarNotaActionPerformed
-        NonEditableTableModel modeloTabla = (NonEditableTableModel)tablaDeNotas.getModel();
+        NonEditableTableModel1 modeloTabla = (NonEditableTableModel1)tablaDeNotas.getModel();
         String nombre = jTextFieldNombre.getText();
         String valor = jTextFieldValor.getText();
         String porcentaje = jTextFieldPorcentaje.getText();
@@ -263,7 +263,7 @@ public class PanelNotas extends javax.swing.JPanel {
 
     private void BotonLimpiarTablaNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarTablaNotasActionPerformed
         colaDeNotas.clear();
-        NonEditableTableModel modeloTabla = (NonEditableTableModel)tablaDeNotas.getModel();
+        NonEditableTableModel1 modeloTabla = (NonEditableTableModel1)tablaDeNotas.getModel();
         modeloTabla.setRowCount(0);
         jTextFieldNombre.setText("");
         jTextFieldValor.setText("");
@@ -296,8 +296,8 @@ public class PanelNotas extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 }
 
-class NonEditableTableModel extends DefaultTableModel {
-    public NonEditableTableModel(Object[] columnNames, int rowCount) {
+class NonEditableTableModel1 extends DefaultTableModel {
+    public NonEditableTableModel1(Object[] columnNames, int rowCount) {
         super(columnNames, rowCount);
     }
 
