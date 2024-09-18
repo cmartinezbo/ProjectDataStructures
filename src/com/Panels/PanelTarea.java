@@ -10,7 +10,6 @@
 
 package com.Panels;
 import com.toedter.calendar.JDateChooser;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
