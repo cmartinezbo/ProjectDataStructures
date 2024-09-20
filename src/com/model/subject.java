@@ -55,16 +55,21 @@ public class subject {
         groups.pushBack(group);
     }
 
+    public SinglyLinkedList<group> getGroups(){
+        return this.groups;
+    }
+
     public void getAttributesInformation(){
         String information="Codigo: "+this.code+", Nombre: "+this.name+", Créditos: "+this.credits+", Tipología: "+this.typology;
         System.out.println(information);
     }
 
-    public void getGroupsInformation(){
-        for(group g: this.groups){
+    public void getGroupsInformation() {
+        for (group g : this.groups) {
             System.out.println(g.getInformation());
         }
     }
+
 
 
 

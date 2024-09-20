@@ -24,6 +24,10 @@ public class group {
         this.days = convertDaysOfWeek(day);
     }
 
+    public String getTeacher(){
+        return this.teacher;
+    }
+
     private DayOfWeek[] convertDaysOfWeek(String days){
         String [] aDays=days.split("-");
         DayOfWeek [] dofarray = new DayOfWeek[aDays.length];

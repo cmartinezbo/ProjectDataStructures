@@ -1,21 +1,21 @@
 package com.controller;
-//import com.openvcs.CSVReader; //don't found
+import com.map.HashMap;
 import com.model.group;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import com.model.subject;
 import java.io.BufferedReader;
+import java.util.List;
 
+import javax.security.auth.Subject;
 import javax.swing.*;
-
-
 public class csvLoader {
 
     String csvFile;
-    static Map<Integer, subject> subjectHash=new HashMap<>(); //Change it for our own hash data structure
+    static com.map.HashMap<Integer,subject> sh=new com.map.HashMap<>(0.6);
+    //static Map<Integer, subject> subjectHash=new HashMap<>(); //Change it for our own hash data structure
     public csvLoader(String csvFile){
         this.csvFile=csvFile;
     }
@@ -38,13 +38,13 @@ public class csvLoader {
 
                 group group = new group(numberGroup, teacher, faculty, startTime, endTime, location, days);
 
-                if (subjectHash.containsKey(code)) {
-                    subject subject = subjectHash.get(code);
+                if (sh.containsKey(code)) {
+                    subject subject = sh.get(code);
                     subject.addGroup(group);
                 } else {
                     subject subject = new subject(code, name, credits, typology);
                     subject.addGroup(group);
-                    subjectHash.put(code, subject);
+                    sh.add(code,subject);
                 }
             }
         } catch (IOException e) {
@@ -52,8 +52,12 @@ public class csvLoader {
         }
     }
 
+    public static HashMap<Integer,subject> getSubjects(){
+        return sh;
+    }
+
     public static void getInformation(){
-        for(subject subject: subjectHash.values()){
+        for(subject subject: sh.values()){
             subject.getAttributesInformation();
             for(group group: subject.groups){
                 System.out.println(group.getInformation());
