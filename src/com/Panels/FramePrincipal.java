@@ -13,6 +13,18 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Calendar;
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import com.controller.SubjectSearchEngine;
+import com.controller.csvLoader;
+import com.model.group;
+//import java.util.HashMap;
+//import java.util.regex.Pattern;
+
+import com.model.subject;
 
 
 
@@ -241,9 +253,14 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonIniciarSActionPerformed
 
     private void BotonAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAsignaturasActionPerformed
-        PanelAsignaturas p6 = new PanelAsignaturas();
+        String csvFile="C:\\Users\\cruzg\\Desktop\\java\\proyectos_intelliJ\\ProjectDataStructures\\docs\\libro1.csv";
+        csvLoader.load(csvFile);
+        com.map.HashMap<Integer, subject> map=csvLoader.getSubjects();
+        SubjectSearchEngine searche=new SubjectSearchEngine(map);
+        PanelAsignaturas p6 = new PanelAsignaturas(searche);
         p6.setSize(1000,675);
         p6.setLocation(0,0);
+        //p6.onEnterPanelAsignaturas();
         
         contenido.removeAll();
         contenido.add(p6,BorderLayout.CENTER);

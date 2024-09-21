@@ -94,6 +94,7 @@ public class SubjectSearchEngine {
         List <subject> subjects=searche.searchSubject("calculo");
         //searche.getSubjects(subjects);
         List <group> groups=searche.searchGroup("Gabriel Ignacio Padilla Leon", subjects.get(1));
+        //List <group> groups=searche.searchGroup("Gabriel Ignacio Padilla Leon", subjects.get(1));
         searche.getGroups(groups);
 
     }
