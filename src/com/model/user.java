@@ -9,42 +9,54 @@ public class user {
 
     private String lastName;
     private String idType;
-    private int id;
+    private String id;
     private String placeOfIssue;
     private String personalEmail;
     private String institutionalEmail;
-    private int contactPhoneNumber;
-    private int studentCode;
-    private LocalDate birthdate;
-
+    private String contactPhoneNumber;
+    private String studentCode;
+    private String birthdate;
+    private String nationality;
     private String address;
-    private int stratus;
+    private String stratus;
     private SinglyLinkedList<subject> subjects;
     private String schedule; //Change for schedule object;
 
-    public user(String name, String lastName, String personalEmail){
+
+    public user(String name, String lastName, String institutionalEmail,
+            String studentCode, String birthdate, String nationality){
         this.name=name;
         this.lastName=lastName;
-        this.personalEmail=personalEmail;
+        this.institutionalEmail=institutionalEmail;
+        this.studentCode=studentCode;
+        this.idType="";
+        this.id="";
+        this.placeOfIssue="";
+        this.personalEmail="";
+        this.contactPhoneNumber="";
+        this.birthdate=birthdate;
+        this.address="";
+        this.stratus="";
+        this.nationality=nationality;
     }
 
-    public int getContactPhoneNumber() {
+    public String getContactPhoneNumber() {
         return contactPhoneNumber;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public int getStratus() {
+    public String getStratus() {
         return stratus;
     }
 
-    public int getStudentCode() {
+    public String getStudentCode() {
         return studentCode;
     }
 
-    public LocalDate getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
@@ -80,15 +92,15 @@ public class user {
         this.address = address;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
-    public void setContactPhoneNumber(int contactPhoneNumber) {
+    public void setContactPhoneNumber(String contactPhoneNumber) {
         this.contactPhoneNumber = contactPhoneNumber;
     }
 
@@ -116,12 +128,21 @@ public class user {
         this.placeOfIssue = placeOfIssue;
     }
 
-    public void setStratus(int stratus) {
+    public void setStratus(String stratus) {
         this.stratus = stratus;
     }
 
-    public void setStudentCode(int studentCode) {
+    public void setStudentCode(String studentCode) {
         this.studentCode = studentCode;
+    }
+
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
 }

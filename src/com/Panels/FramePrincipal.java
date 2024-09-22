@@ -25,8 +25,7 @@ import com.model.group;
 //import java.util.regex.Pattern;
 
 import com.model.subject;
-
-
+import com.model.user;
 
 
 public class FramePrincipal extends javax.swing.JFrame {
@@ -47,7 +46,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         PanelPrin = new javax.swing.JPanel();
         PanelMenu = new javax.swing.JPanel();
         BotonUsuario = new javax.swing.JButton();
@@ -253,7 +251,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonIniciarSActionPerformed
 
     private void BotonAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAsignaturasActionPerformed
-        String csvFile="C:\\Users\\cruzg\\Desktop\\java\\proyectos_intelliJ\\ProjectDataStructures\\docs\\libro1.csv";
+        String csvFile = "docs/materias.txt";
         csvLoader.load(csvFile);
         com.map.HashMap<Integer, subject> map=csvLoader.getSubjects();
         SubjectSearchEngine searche=new SubjectSearchEngine(map);
