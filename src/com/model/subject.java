@@ -64,6 +64,17 @@ public class subject {
         System.out.println(information);
     }
 
+    public group getGroupByIndex(int index){
+        int i=0;
+        for(group group: groups){
+            i++;
+            if(i==index){
+                return group;
+            }
+        }
+        return null;
+    }
+
     public void getGroupsInformation() {
         for (group g : this.groups) {
             System.out.println(g.getInformation());

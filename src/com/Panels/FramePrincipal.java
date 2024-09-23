@@ -26,6 +26,7 @@ import com.model.group;
 
 import com.model.subject;
 import com.model.user;
+import com.model.schedule;
 
 
 public class FramePrincipal extends javax.swing.JFrame {
@@ -251,11 +252,12 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonIniciarSActionPerformed
 
     private void BotonAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAsignaturasActionPerformed
-        String csvFile = "docs/materias.txt";
+        String csvFile = "docs/libro1.csv";
         csvLoader.load(csvFile);
         com.map.HashMap<Integer, subject> map=csvLoader.getSubjects();
         SubjectSearchEngine searche=new SubjectSearchEngine(map);
-        PanelAsignaturas p6 = new PanelAsignaturas(searche);
+        schedule sc=new schedule();
+        PanelAsignaturas p6 = new PanelAsignaturas(searche,sc);
         p6.setSize(1000,675);
         p6.setLocation(0,0);
         //p6.onEnterPanelAsignaturas();
