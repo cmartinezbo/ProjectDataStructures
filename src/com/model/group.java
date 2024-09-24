@@ -30,6 +30,10 @@ public class group {
         return this.teacher;
     }
 
+    public int getNumber(){
+        return this.number;
+    }
+
     private DayOfWeek[] convertDaysOfWeek(String days) {
         String[] aDays = days.split("-");
         DayOfWeek[] dofarray = new DayOfWeek[aDays.length];
@@ -65,7 +69,8 @@ public class group {
             d += this.days[j + 1].toString();
 
         }
-        String information = "Grupo número: " + this.number + ", Profesor: " + this.teacher + ", Facultad: " + this.faculty + ", Hora de inicio: " + startTime.toString() + ", Hora de finalización: " + endTime.toString() + ", Ubicación: " + this.location + ", Días: " + d;
+        String information = "Grupo número: " + this.number + ", Profesor: " + this.teacher + ", Facultad: " + this.faculty + "\n" +
+                "Hora de inicio: " + startTime.toString() + ", Hora de finalización: " + endTime.toString() + "\nUbicación: " + this.location + "\nDías: " + d;
         return information;
     }
 

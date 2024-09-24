@@ -64,6 +64,10 @@ public class subject {
         System.out.println(information);
     }
 
+    public String getAttributesToString(){
+        return "Codigo: "+this.code+", Nombre: "+this.name+", Créditos: "+this.credits+", Tipología: "+this.typology;
+    }
+
     public group getGroupByIndex(int index){
         int i=0;
         for(group group: groups){

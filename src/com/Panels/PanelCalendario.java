@@ -14,13 +14,24 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import com.model.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.time.LocalTime;
+import java.time.Duration;
+import java.time.DayOfWeek;
+import java.util.Random;
+import java.awt.Color;
+import com.model.schedule;
+import com.model.subject;
 
 
 
 
 
 public class PanelCalendario extends javax.swing.JPanel {
-        private subject asignatura1; // Mover la declaración aquí
+        schedule scheduleInstance = PanelAsignaturas.scheduleInstance; // Acceso a la instancia compartida
+        private static final Random random = new Random();
+        private String selectedCellValue;
 
     /**
      * Creates new form Panel1
@@ -29,51 +40,9 @@ public class PanelCalendario extends javax.swing.JPanel {
         initComponents();
         //configurarTablaCalendarioCompleto();
         configurarTablaCalendarioDetalles();
-        group grupo3 = new group(3, "Alfredo Arias", "Facultad de Ciencias", 11, 13, "Edificio 405 - Salon 203", "lunes");
-        group grupo5 = new group(5, "Alfredo Arias", "Facultad de Ciencias", 11, 13, "Edificio 405 - Salon 203", "martes");
-        group grupo7 = new group(7, "Alfredo Arias", "Facultad de Ciencias", 11, 13, "Edificio 405 - Salon 203", "jueves");
-        group grupo9 = new group(9, "Alfredo Arias", "Facultad de Ciencias", 11, 13, "Edificio 405 - Salon 203", "viernes");
-        asignatura1 = new subject(1001, "Cálculo integral", 4, "Fund Obli");
-        asignatura1.addGroup(grupo3);
-        asignatura1.addGroup(grupo5);
-        asignatura1.addGroup(grupo7);
-        asignatura1.addGroup(grupo9);
-        
     }
 
-    
-    private void configurarTablaCalendarioCompleto() {
-        // Crear el modelo de tabla personalizado
-        CustomTableModel1 modeloCalendarioCompleto = new CustomTableModel1(
-            new Object[] {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"}, // Nombres de las columnas
-            12 // Número inicial de filas
-        );
-        calendarioMes.setModel(modeloCalendarioCompleto);
 
-        // Configurar la fuente y altura de las filas
-        calendarioMes.setFont(new Font("SansSerif", Font.PLAIN, 14));
-
-        int[] heights = {20, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 60};
-        for (int i = 0; i < heights.length; i++) {
-            calendarioMes.setRowHeight(i, heights[i]);
-        }
-
-        // Configurar los valores en la tabla
-        int[][] values = {
-            {1, 2, 3, 4, 5, 6, 7},
-            {8, 9, 10, 11, 12, 13, 14},
-            {15, 16, 17, 18, 19, 20, 21},
-            {22, 23, 24, 25, 26, 27, 28},
-            {29, 30}
-        };
-
-        for (int row = 0; row < values.length; row++) {
-            for (int col = 0; col < values[row].length; col++) {
-                calendarioMes.setValueAt(values[row][col], row * 2, col);
-            }
-        }
-    }
-    
     private void configurarTablaCalendarioDetalles() {
         // Crear el modelo de tabla personalizado
         CustomTableModel2 modeloCalendarioDetalles = new CustomTableModel2(
@@ -84,7 +53,7 @@ public class PanelCalendario extends javax.swing.JPanel {
 
         // Configurar la fuente y altura de las filas
         calendarioMes.setFont(new Font("SansSerif", Font.PLAIN, 14));
-            calendarioMes.setDefaultRenderer(Object.class, new CustomCellRenderer());
+        calendarioMes.setDefaultRenderer(Object.class, new CustomCellRenderer());
 
         // Configurar los valores en la tabla
         calendarioMes.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -95,6 +64,25 @@ public class PanelCalendario extends javax.swing.JPanel {
                 calendarioMes.setValueAt(row + ":00", row, 0);
         }
 
+        calendarioMes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                // Obtener la fila y columna clickeadas
+                int row = calendarioMes.rowAtPoint(evt.getPoint());
+                int column = calendarioMes.columnAtPoint(evt.getPoint());
+
+                // Asegurarse de que la celda no esté vacía
+                Object cellValue = calendarioMes.getValueAt(row, column);
+                if (cellValue != null) {
+                    subject currentSubject = scheduleInstance.findSubjectByName(cellValue.toString());
+                    group currentGroup = scheduleInstance.getGroupBySubject(currentSubject);
+                    JOptionPane.showMessageDialog(calendarioMes,
+                            currentSubject.getAttributesToString() + "\n" + currentGroup.getInformation(), // Texto a mostrar
+                            "Información de la asignatura", // Título
+                            JOptionPane.INFORMATION_MESSAGE); // Tipo de mensaje
+                }
+            }
+        });
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
            @Override
            public void run() {
@@ -103,10 +91,10 @@ public class PanelCalendario extends javax.swing.JPanel {
                calendarioMes.scrollRectToVisible(calendarioMes.getCellRect(middleRow, 0, true));
            }
         });
-        
+
     }
 
-    
+
 
 
     /**
@@ -162,7 +150,7 @@ public class PanelCalendario extends javax.swing.JPanel {
         calendarioMes.setRowHeight(60);
         jScrollPane2.setViewportView(calendarioMes);
 
-        agregarMateria.setText("Agregar");
+        agregarMateria.setText("Actualizar");
         agregarMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarMateriaActionPerformed(evt);
@@ -218,10 +206,51 @@ public class PanelCalendario extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void agregarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarMateriaActionPerformed
-        calendarioMes.setValueAt(asignatura1.getName() + " (grupo ...)", 9, 5);
-    }//GEN-LAST:event_agregarMateriaActionPerformed
+    private void agregarMateriaActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_agregarMateriaActionPerformed
+        int i = 0; // Inicializa el índice
+        CustomCellRenderer customRenderer = (CustomCellRenderer) calendarioMes.getDefaultRenderer(Object.class);
 
+        for (Map.Entry<subject, group> entry : scheduleInstance.getMapSubjectGroup().entrySet()) {
+            subject subj = entry.getKey();      // Obtener la asignatura (clave)
+            group grp = entry.getValue();       // Obtener el grupo (valor)
+
+            String subjName = subj.getName();
+            int groupNumber = grp.getNumber();
+
+            int dayInt;
+
+            // Generar valores RGB aleatorios entre 128 y 255 para obtener colores claros
+            int red = random.nextInt(128) + 128;   // Rango de 128 a 255
+            int green = random.nextInt(128) + 128; // Rango de 128 a 255
+            int blue = random.nextInt(128) + 128;  // Rango de 128 a 255
+
+            Color color = new Color(red, green, blue);
+
+
+            for (DayOfWeek dia : grp.getDays()) {
+                dayInt = obtenerIndiceDia(dia); // Usa dia directamente sin volver a declarar el tipo
+                LocalTime groupStart = grp.getStartTime();
+                LocalTime groupEnd = grp.getEndTime();
+                Duration duration = Duration.between(groupStart, groupEnd);
+                long horas = duration.toHours();
+                int horasInt = (int) horas; // Casting explícito
+                int horaInicio = groupStart.getHour();
+
+                for (int j = 0; j < horasInt; j++){
+                    customRenderer.setCellColor(horaInicio + j, dayInt + 1, color);
+                    if (j == 0){
+                        calendarioMes.setValueAt(subjName, horaInicio + j, dayInt + 1);
+                    }
+                }
+            }
+            i++; // Incrementa el índice
+        }
+    } //GEN-LAST:event_agregarMateriaActionPerformed
+
+
+    private static int obtenerIndiceDia(DayOfWeek dia) {
+        return (dia.getValue() % 7); // Asegura que SUNDAY sea 0
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarMateria;
@@ -260,12 +289,12 @@ class CustomTableModel2 extends DefaultTableModel {
 
 
 
-class CustomCellRenderer extends DefaultTableCellRenderer {
+/*class CustomCellRenderer extends DefaultTableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column) {
-        
+
         // Llamamos al método de la superclase para mantener el renderizado predeterminado
         Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -284,8 +313,42 @@ class CustomCellRenderer extends DefaultTableCellRenderer {
             cell.setBackground(Color.WHITE);   // Color de fondo predeterminado
             cell.setForeground(Color.BLACK);   // Color de texto predeterminado
         }
-        
         return cell;
     }
-    
+}*/
+
+class CustomCellRenderer extends DefaultTableCellRenderer {
+
+    // Mapa para almacenar colores personalizados por coordenadas de celda
+    private final Map<Point, Color> cellColors = new HashMap<>();
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                   boolean hasFocus, int row, int column) {
+
+        // Llamamos al método de la superclase para mantener el renderizado predeterminado
+        Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        // Restaurar el borde predeterminado (líneas divisorias)
+        if (cell instanceof JComponent) {
+            ((JComponent) cell).setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+        }
+
+        // Comprobar si hay un color personalizado para esta celda
+        if (cellColors.containsKey(new Point(column, row))) {
+            cell.setBackground(cellColors.get(new Point(column, row))); // Color personalizado
+            cell.setForeground(Color.BLACK);  // Cambiar el color del texto a negro
+        } else {
+            // Restaurar los colores predeterminados si la celda no tiene un color personalizado
+            cell.setBackground(Color.WHITE);   // Color de fondo predeterminado
+            cell.setForeground(Color.BLACK);   // Color de texto predeterminado
+        }
+
+        return cell;
+    }
+
+    // Método para establecer un color en una celda específica
+    public void setCellColor(int row, int column, Color color) {
+        cellColors.put(new Point(column, row), color);
+    }
 }

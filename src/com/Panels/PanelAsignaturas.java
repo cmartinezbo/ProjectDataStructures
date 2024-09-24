@@ -23,7 +23,7 @@ public class PanelAsignaturas extends JPanel {
     private DefaultListModel<String> subjectListModel;
     private DefaultListModel<String> groupListModel;
     private SubjectSearchEngine searchEngine;
-    private schedule scheduleInstance; // Instancia de schedule para verificar conflictos
+    public static schedule scheduleInstance; // Instancia de schedule para verificar conflictos
 
     public PanelAsignaturas(SubjectSearchEngine searchEngine, schedule scheduleInstance) {
         this.searchEngine = searchEngine;

@@ -18,7 +18,7 @@ public class schedule {
     private Map<DayOfWeek, subject> schedule = new TreeMap<>(); //Also could be a treemap with keys-value=DayOfWeek-groups
     private String scheduleName;
 
-    private HashMap<subject,group> mapSubjectGroup=new HashMap<>();
+    public HashMap<subject,group> mapSubjectGroup=new HashMap<>();
 
     public boolean hasConflict(group newGroup) {
         // Recorremos la lista de grupos actuales en el horario
@@ -84,5 +84,16 @@ public class schedule {
         schedule1.addSubject(subject2,g2);
     }
 
+    public subject findSubjectByName(String subjectName) {
+        for (subject subj : mapSubjectGroup.keySet()) {
+            if (subj.getName().equals(subjectName)) { // Comparar nombres
+                return subj; // Retornar la subject asociada
+            }
+        }
+        return null; // Si no se encuentra, retornar null
+    }
 
+    public group getGroupBySubject(subject currentSubject) {
+        return mapSubjectGroup.get(currentSubject);
+    }
 }
