@@ -10,10 +10,13 @@
 
 package com.Panels;
 
+import com.model.schedule;
 import com.model.user;
 
+import java.awt.event.ActionEvent;
+
 public class PanelUsuario extends javax.swing.JPanel {
-    user firstUser = new user("Adrian", "Castillo", "acastillo@unal.edu.co","10105656","20/20/2002","COLOMBIA");
+    user userInstance = FramePrincipal.firstUser; // Acceso a la instancia compartida
     int c = 0;
     /**
      * Creates new form Panel1
@@ -43,21 +46,21 @@ public class PanelUsuario extends javax.swing.JPanel {
     }
     
     private void setTexts() {
-        jLabel2.setText(firstUser.getName()); //1
-        jLabel4.setText(firstUser.getLastName());  //2
-        jLabel66.setText(firstUser.getInstitutionalEmail());     
-        jLabel70.setText(firstUser.getStudentCode());       
-        jLabel8.setText(firstUser.getPersonalEmail());//6
-        jLabel6.setText(firstUser.getIdType());//3
+        jLabel2.setText(userInstance.getName()); //1
+        jLabel4.setText(userInstance.getLastName());  //2
+        jLabel66.setText(userInstance.getInstitutionalEmail());
+        jLabel70.setText(userInstance.getStudentCode());
+        jLabel8.setText(userInstance.getPersonalEmail());//6
+        jLabel6.setText(userInstance.getIdType());//3
         
-        jLabel11.setText(firstUser.getId());//4
-        jLabel79.setText(firstUser.getStratus());//9
-        jLabel13.setText(firstUser.getPlaceOfIssue());//5
-        jLabel77.setText(firstUser.getAddress());//8
+        jLabel11.setText(userInstance.getId());//4
+        jLabel79.setText(userInstance.getStratus());//9
+        jLabel13.setText(userInstance.getPlaceOfIssue());//5
+        jLabel77.setText(userInstance.getAddress());//8
 
-        jLabel73.setText(firstUser.getBirthdate());
-        jLabel75.setText(firstUser.getNationality());
-        jLabel68.setText(firstUser.getContactPhoneNumber());//7
+        jLabel73.setText(userInstance.getBirthdate());
+        jLabel75.setText(userInstance.getNationality());
+        jLabel68.setText(userInstance.getContactPhoneNumber());//7
     }
     
     private void toggleTextFields() {
@@ -523,16 +526,16 @@ public class PanelUsuario extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        firstUser.setName(jTextField1.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
-        firstUser.setLastName(jTextField2.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
-        firstUser.setIdType(jTextField3.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
-        firstUser.setId(jTextField4.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
-        firstUser.setPlaceOfIssue(jTextField5.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
-        firstUser.setPersonalEmail(jTextField6.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
-        firstUser.setContactPhoneNumber(jTextField7.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
-        firstUser.setAddress(jTextField8.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
-        firstUser.setStratus(jTextField9.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+    private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        userInstance.setName(jTextField1.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+        userInstance.setLastName(jTextField2.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+        userInstance.setIdType(jTextField3.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+        userInstance.setId(jTextField4.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+        userInstance.setPlaceOfIssue(jTextField5.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+        userInstance.setPersonalEmail(jTextField6.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+        userInstance.setContactPhoneNumber(jTextField7.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+        userInstance.setAddress(jTextField8.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
+        userInstance.setStratus(jTextField9.getText()); // Reemplaza jTextField1 con el nombre de tu JTextField
         setTexts();
         
     }//GEN-LAST:event_jButton2ActionPerformed

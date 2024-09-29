@@ -29,7 +29,7 @@ import com.model.subject;
 
 
 public class PanelCalendario extends javax.swing.JPanel {
-        schedule scheduleInstance = PanelAsignaturas.scheduleInstance; // Acceso a la instancia compartida
+        schedule scheduleInstance = FramePrincipal.scheduleI;
         private static final Random random = new Random();
         private String selectedCellValue;
 
@@ -40,6 +40,47 @@ public class PanelCalendario extends javax.swing.JPanel {
         initComponents();
         //configurarTablaCalendarioCompleto();
         configurarTablaCalendarioDetalles();
+
+        int i = 0; // Inicializa el índice
+        CustomCellRenderer customRenderer = (CustomCellRenderer) calendarioMes.getDefaultRenderer(Object.class);
+
+
+        for (Map.Entry<subject, group> entry : scheduleInstance.getMapSubjectGroup().entrySet()) {
+            subject subj = entry.getKey();      // Obtener la asignatura (clave)
+            group grp = entry.getValue();       // Obtener el grupo (valor)
+
+            String subjName = subj.getName();
+            int groupNumber = grp.getNumber();
+
+            int dayInt;
+
+            // Generar valores RGB aleatorios entre 128 y 255 para obtener colores claros
+            int red = random.nextInt(128) + (128/2);   // Rango de 128 a 255
+            int green = random.nextInt(128) + (128/2); // Rango de 128 a 255
+            int blue = random.nextInt(128) + (128/2);  // Rango de 128 a 255
+
+            Color color = new Color(red, green, blue);
+
+
+            for (DayOfWeek dia : grp.getDays()) {
+                dayInt = obtenerIndiceDia(dia); // Usa dia directamente sin volver a declarar el tipo
+                LocalTime groupStart = grp.getStartTime();
+                LocalTime groupEnd = grp.getEndTime();
+                Duration duration = Duration.between(groupStart, groupEnd);
+                long horas = duration.toHours();
+                int horasInt = (int) horas; // Casting explícito
+                int horaInicio = groupStart.getHour();
+
+                for (int j = 0; j < horasInt; j++){
+                    customRenderer.setCellColor(horaInicio + j, dayInt + 1, color);
+                    if (j == 0){
+                        calendarioMes.setValueAt(subjName, horaInicio + j, dayInt + 1);
+                    }
+                }
+            }
+            i++; // Incrementa el índice
+        }
+
     }
 
 
@@ -105,21 +146,19 @@ public class PanelCalendario extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         calendarioMes = new javax.swing.JTable();
-        agregarMateria = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1000, 675));
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(1000, 675));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(978, 1000));
+        jPanel1.setPreferredSize(new java.awt.Dimension(978, 675));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 0, 50)); // NOI18N
         jLabel1.setText("CALENDARIO");
@@ -128,66 +167,48 @@ public class PanelCalendario extends javax.swing.JPanel {
         jScrollPane2.setPreferredSize(new java.awt.Dimension(910, 500));
 
         calendarioMes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"
-            }
+                new Object[][]{
+                        {null, null, null, null, null, null, null},
+                        //... (otras filas)
+                },
+                new String[]{
+                        "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"
+                }
         ));
         calendarioMes.setPreferredSize(new java.awt.Dimension(900, 1440));
         calendarioMes.setRowHeight(60);
         jScrollPane2.setViewportView(calendarioMes);
 
-        agregarMateria.setText("Actualizar");
-        agregarMateria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregarMateriaActionPerformed(evt);
-            }
-        });
 
+        // Configura el layout del panel
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(242, 242, 242)
-                        .addComponent(agregarMateria))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 38, Short.MAX_VALUE))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(242, 242, 242)) // Ajusta si es necesario
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(agregarMateria)
-                        .addGap(33, 33, 33)))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(358, Short.MAX_VALUE))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addGap(46, 46, 46)
+                                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                        // .addGroup(...) // Se eliminó la parte del botón
+                                )
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(358, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -195,57 +216,16 @@ public class PanelCalendario extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void agregarMateriaActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_agregarMateriaActionPerformed
-        int i = 0; // Inicializa el índice
-        CustomCellRenderer customRenderer = (CustomCellRenderer) calendarioMes.getDefaultRenderer(Object.class);
-
-        for (Map.Entry<subject, group> entry : scheduleInstance.getMapSubjectGroup().entrySet()) {
-            subject subj = entry.getKey();      // Obtener la asignatura (clave)
-            group grp = entry.getValue();       // Obtener el grupo (valor)
-
-            String subjName = subj.getName();
-            int groupNumber = grp.getNumber();
-
-            int dayInt;
-
-            // Generar valores RGB aleatorios entre 128 y 255 para obtener colores claros
-            int red = random.nextInt(128) + 128;   // Rango de 128 a 255
-            int green = random.nextInt(128) + 128; // Rango de 128 a 255
-            int blue = random.nextInt(128) + 128;  // Rango de 128 a 255
-
-            Color color = new Color(red, green, blue);
-
-
-            for (DayOfWeek dia : grp.getDays()) {
-                dayInt = obtenerIndiceDia(dia); // Usa dia directamente sin volver a declarar el tipo
-                LocalTime groupStart = grp.getStartTime();
-                LocalTime groupEnd = grp.getEndTime();
-                Duration duration = Duration.between(groupStart, groupEnd);
-                long horas = duration.toHours();
-                int horasInt = (int) horas; // Casting explícito
-                int horaInicio = groupStart.getHour();
-
-                for (int j = 0; j < horasInt; j++){
-                    customRenderer.setCellColor(horaInicio + j, dayInt + 1, color);
-                    if (j == 0){
-                        calendarioMes.setValueAt(subjName, horaInicio + j, dayInt + 1);
-                    }
-                }
-            }
-            i++; // Incrementa el índice
-        }
-    } //GEN-LAST:event_agregarMateriaActionPerformed
+    }
 
 
     private static int obtenerIndiceDia(DayOfWeek dia) {
@@ -253,7 +233,6 @@ public class PanelCalendario extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton agregarMateria;
     public javax.swing.JTable calendarioMes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -286,36 +265,6 @@ class CustomTableModel2 extends DefaultTableModel {
         return false;
     }
 }
-
-
-
-/*class CustomCellRenderer extends DefaultTableCellRenderer {
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
-
-        // Llamamos al método de la superclase para mantener el renderizado predeterminado
-        Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-        // Restaurar el borde predeterminado (líneas divisorias)
-        if (cell instanceof JComponent) {
-            // Crear un borde gris de 1 píxel de grosor
-            ((JComponent) cell).setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-        }
-
-        // Especificar la celda que deseas personalizar (por ejemplo, fila 5, columna 3)
-        if (row == 9 && column == 5) {
-            cell.setBackground(Color.YELLOW);  // Cambiar el color de fondo a amarillo
-            cell.setForeground(Color.BLACK);   // Cambiar el color del texto a negro
-        } else {
-            // Restaurar los colores predeterminados si la celda no coincide
-            cell.setBackground(Color.WHITE);   // Color de fondo predeterminado
-            cell.setForeground(Color.BLACK);   // Color de texto predeterminado
-        }
-        return cell;
-    }
-}*/
 
 class CustomCellRenderer extends DefaultTableCellRenderer {
 

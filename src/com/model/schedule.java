@@ -55,6 +55,16 @@ public class schedule {
         return inicioG1.isBefore(finG2) && inicioG2.isBefore(finG1);
     }
 
+    public void clearSchedule() {
+        subjects.clear(); // Limpiar la lista de asignaturas
+        groups.clear(); // Limpiar la lista de grupos
+        mapSubjectGroup.clear(); // Limpiar el mapa de asignaturas a grupos
+
+        // Si también deseas limpiar el TreeMap del horario, puedes hacerlo aquí
+        schedule.clear(); // Limpiar el horario si es necesario
+
+    }
+
     public void addSubject(subject subj, group grp) {
         // Verificar si hay conflictos de horario antes de agregar la materia
         if (!hasConflict(grp)) {

@@ -20,23 +20,28 @@ import java.util.Locale;
 
 import com.controller.SubjectSearchEngine;
 import com.controller.csvLoader;
-import com.model.group;
+import com.datastructures.sequential.SinglyLinkedList;
+import com.main.test.Tests2.MinHeapForTareas;
+import com.model.*;
 //import java.util.HashMap;
 //import java.util.regex.Pattern;
 
-import com.model.subject;
-import com.model.user;
-import com.model.schedule;
-
 
 public class FramePrincipal extends javax.swing.JFrame {
+    public static user firstUser; //para panel usuario
+    public static SinglyLinkedList<nota> colaDeNotasI = new SinglyLinkedList<>(); //para panel notas
+    public static NotaListOperations colaDeNotasOpI = new NotaListOperations(colaDeNotasI);
+    public static MinHeapForTareas minHeapI = new MinHeapForTareas(10);
+    public static schedule scheduleI = new schedule(); // Instancia de schedule para verificar conflictos
+
 
     /**
      * Creates new form FramePrincipal
      */
     public FramePrincipal() {
         initComponents();
-        
+        firstUser = new user("Adrian", "Castillo", "acastillo@unal.edu.co", "10105656", "20/20/2002", "COLOMBIA");
+
     }
 
     /**

@@ -11,15 +11,14 @@ import com.datastructures.sequential.SinglyLinkedList;
 public class PanelNotas extends javax.swing.JPanel {
 
  
-    private SinglyLinkedList<nota> colaDeNotas;
+    SinglyLinkedList<nota> colaDeNotas = FramePrincipal.colaDeNotasI;
     private nota notaPrueba;
-    private NotaListOperations colaDeNotasOp;
+    NotaListOperations colaDeNotasOp = FramePrincipal.colaDeNotasOpI;
     
     public PanelNotas() {
         initComponents();
         configurarTablaNotas();
-        colaDeNotas = new SinglyLinkedList<>();
-        colaDeNotasOp = new NotaListOperations(colaDeNotas);        
+
     }
 
     /**
@@ -54,7 +53,7 @@ public class PanelNotas extends javax.swing.JPanel {
         jScrollPane1.setPreferredSize(new java.awt.Dimension(1000, 675));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(978, 1000));
+        jPanel1.setPreferredSize(new java.awt.Dimension(978, 675));
 
         tablaDeNotas.setBackground(new java.awt.Color(249, 250, 250));
         tablaDeNotas.setModel(new javax.swing.table.DefaultTableModel(
@@ -78,7 +77,7 @@ public class PanelNotas extends javax.swing.JPanel {
         jLabel3.setText("Selecciona la asignatura:");
         jLabel3.setPreferredSize(new java.awt.Dimension(52, 16));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asignatura 1", "Asignatura 2", "Asignatura 3" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Asignatura 1"}));
 
         BotonAgregarNota.setText("Agregar");
         BotonAgregarNota.addActionListener(new java.awt.event.ActionListener() {
@@ -200,18 +199,18 @@ public class PanelNotas extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+
+
     private void configurarTablaNotas() {
         // Crear y establecer el modelo de la tabla
         NonEditableTableModel1 modeloTabla = new NonEditableTableModel1(
-            new Object[] {"%", "Nombre", "Nota"}, // Nombres de las columnas
-            0 // Número inicial de filas
+                new Object[] {"%", "Nombre", "Nota"}, // Nombres de las columnas
+                0 // Número inicial de filas
         );
         tablaDeNotas.setModel(modeloTabla);
 
         // Configurar las características visuales de la tabla
-        tablaDeNotas.setFont(new Font("SansSerif", Font.PLAIN, 14)); // Fuente Serif, tamaño 14, estilo normal
+        tablaDeNotas.setFont(new Font("SansSerif", Font.PLAIN, 14)); // Fuente SansSerif, tamaño 14, estilo normal
 
         // Establecer el ancho de las columnas
         TableColumn columnaPorcentaje = tablaDeNotas.getColumnModel().getColumn(0);
@@ -222,10 +221,33 @@ public class PanelNotas extends javax.swing.JPanel {
 
         TableColumn columnaValor = tablaDeNotas.getColumnModel().getColumn(2);
         columnaValor.setPreferredWidth(50);
+
+        // Comprobar si la lista está vacía
+        if (!colaDeNotas.isEmpty()) {
+            SinglyLinkedList.Node<nota> current = colaDeNotas.topFrontNode();
+
+            modeloTabla.setRowCount(0); // Limpiar filas existentes (si las hay)
+
+            while (current != null) {
+                modeloTabla.addRow(current.key.toArray());
+                current = current.next;
+            }
+            LabelPromedio.setText("Promedio: " + colaDeNotasOp.promedio());
+            LabelNotaAcumulada.setText("Nota Acumulada: " + colaDeNotasOp.notaAcumulada());
+            LabelNotaMinima.setText("Nota mínima (en el " + colaDeNotasOp.notaMinima()[1] +
+                    "% restante) para pasar la materia: " + colaDeNotasOp.notaMinima()[0]);
+            if (colaDeNotasOp.sumaPorcentajes() > 100.5){
+                LabelAdvertencia.setText("ADVERTENCIA: La suma de los porcentajes es mayor a 100");
+            }
+        }
+
+
+
     }
 
 
-    
+
+
     private void BotonAgregarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarNotaActionPerformed
         NonEditableTableModel1 modeloTabla = (NonEditableTableModel1)tablaDeNotas.getModel();
         String nombre = jTextFieldNombre.getText();
@@ -239,7 +261,7 @@ public class PanelNotas extends javax.swing.JPanel {
 
             SinglyLinkedList.Node<nota> current = colaDeNotas.topFrontNode();
 
-                modeloTabla.setRowCount(0);
+            modeloTabla.setRowCount(0);
 
              while (current != null) {
                 modeloTabla.addRow(current.key.toArray());

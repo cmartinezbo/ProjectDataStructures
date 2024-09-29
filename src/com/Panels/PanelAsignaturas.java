@@ -17,17 +17,19 @@ public class PanelAsignaturas extends JPanel {
 
     private JTextField searchField;
     private JButton searchButton;
+    private JButton clearScheduleButton; // Nuevo botón para limpiar el horario
+
     private JButton addToScheduleButton; // Botón para agregar al horario
     private JList<String> subjectList;
     private JList<String> groupList;
     private DefaultListModel<String> subjectListModel;
     private DefaultListModel<String> groupListModel;
     private SubjectSearchEngine searchEngine;
-    public static schedule scheduleInstance; // Instancia de schedule para verificar conflictos
+    schedule scheduleInstance = FramePrincipal.scheduleI;
 
     public PanelAsignaturas(SubjectSearchEngine searchEngine, schedule scheduleInstance) {
         this.searchEngine = searchEngine;
-        this.scheduleInstance = scheduleInstance;
+        //this.scheduleInstance = scheduleInstance;
         initComponents();
     }
 
@@ -35,7 +37,8 @@ public class PanelAsignaturas extends JPanel {
         // Crear los componentes
         searchField = new JTextField(20);
         searchButton = new JButton("Buscar");
-        addToScheduleButton = new JButton("Agregar al Horario"); // Botón para agregar al horario
+        addToScheduleButton = new JButton("Agregar al Horario");
+        clearScheduleButton = new JButton("Limpiar Horario"); // Nuevo botón para limpiar el horario
         subjectListModel = new DefaultListModel<>();
         subjectList = new JList<>(subjectListModel);
         groupListModel = new DefaultListModel<>();
@@ -96,6 +99,10 @@ public class PanelAsignaturas extends JPanel {
         gbc.fill = GridBagConstraints.NONE;
         add(addToScheduleButton, gbc); // Botón para agregar asignatura al horario
 
+        // Agregar botón para limpiar el horario
+        gbc.gridx = 1; // Colocar al lado del botón de agregar
+        add(clearScheduleButton, gbc); // Nuevo botón para limpiar el horario
+
         // Acción del botón buscar
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -116,6 +123,16 @@ public class PanelAsignaturas extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 agregarAlHorario();
+            }
+        });
+
+        // Acción del botón "Limpiar Horario"
+        clearScheduleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                scheduleInstance.clearSchedule(); // Limpia el horario
+                // Muestra un mensaje de éxito
+                JOptionPane.showMessageDialog(PanelAsignaturas.this, "Se ha limpiado con éxito el horario", "Resultado", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
@@ -181,7 +198,7 @@ public class PanelAsignaturas extends JPanel {
             if (!scheduleInstance.hasConflict(selectedGroup)) {
                 // Si no hay conflicto, agregar la asignatura y el grupo al horario
                 scheduleInstance.addSubject(selectedSubject, selectedGroup);
-                JOptionPane.showMessageDialog(this, "Asignatura agregada al horario.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Asignatura correctamente agregada al horario.\nDirigete a CALENDARIO para ver tu horario.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 // Si hay conflicto de horario, mostrar un mensaje de advertencia
                 JOptionPane.showMessageDialog(this, "Conflicto de horario detectado para la asignatura: " + selectedSubject.getName(), "Conflicto de horario", JOptionPane.WARNING_MESSAGE);
