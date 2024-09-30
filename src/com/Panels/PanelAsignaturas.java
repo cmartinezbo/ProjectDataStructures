@@ -198,7 +198,7 @@ public class PanelAsignaturas extends JPanel {
             if (!scheduleInstance.hasConflict(selectedGroup)) {
                 // Si no hay conflicto, agregar la asignatura y el grupo al horario
                 scheduleInstance.addSubject(selectedSubject, selectedGroup);
-                JOptionPane.showMessageDialog(this, "Asignatura correctamente agregada al horario.\nDirigete a CALENDARIO para ver tu horario.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Asignatura agregada correctamente.\nDirigete al apartado HORARIO.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 // Si hay conflicto de horario, mostrar un mensaje de advertencia
                 JOptionPane.showMessageDialog(this, "Conflicto de horario detectado para la asignatura: " + selectedSubject.getName(), "Conflicto de horario", JOptionPane.WARNING_MESSAGE);

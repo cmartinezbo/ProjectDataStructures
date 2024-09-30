@@ -161,7 +161,7 @@ public class PanelCalendario extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(978, 675));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 0, 50)); // NOI18N
-        jLabel1.setText("CALENDARIO");
+        jLabel1.setText("HORARIO");
         jLabel1.setPreferredSize(new java.awt.Dimension(52, 16));
 
         jScrollPane2.setPreferredSize(new java.awt.Dimension(910, 500));
